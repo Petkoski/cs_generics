@@ -4,13 +4,17 @@ using System.ComponentModel;
 
 namespace CollectIt
 {
+    /**
+     * Working with generic collections and data structures
+     */
+
     class Program
     {
         static void Main()
         {
             //Arrays();
             //Lists();
-            //Queues();
+            Queues();
             //Stacks();
             //Sets();
             //Linked();
@@ -22,7 +26,7 @@ namespace CollectIt
 
             //after interfaces
             //SortedWithComparer();
-            SortedAndClean();
+            //SortedAndClean();
         }
 
         private static void SortedSet()
@@ -139,12 +143,15 @@ namespace CollectIt
 
         private static void Arrays()
         {
+            //Array is a data structure
+
             Employee[] employees = new Employee[2]
             {
                 new Employee { Name = "Scott"},
                 new Employee { Name="Alex" }
              };
 
+            // Two ways to iterate
             foreach (var employee in employees)
             {
                 Console.Write(employee.Name);
@@ -154,10 +161,20 @@ namespace CollectIt
             {
                 Console.WriteLine(employees[i].Name);
             }
+
+            //To add a new element (difficult because an arr has fixed size):
+            //Array.Resize - but can be paintful if you consistently resize the array (+ might lead to performance problems)
+            //Behind the scenes, the array is one contiguous block of memory. Everytime we resize it, it needs to be copied around into a new place
+            Array.Resize(ref employees, 10);
+
+            Console.Read();
         }
 
         private static void Lists()
         {
+            //It doesn't care about the objects you are storing inside,
+            //it does care about the types (since we are using generic type to parameterize methods like Add(), IndexOf(), etc.)
+
             List<Employee> employees = new List<Employee>
             {
                 new Employee { Name = "Scott" },
@@ -174,19 +191,59 @@ namespace CollectIt
             {
                 Console.WriteLine(employees[i].Name);
             }
+
+            //ListCapacity();
+
+            Console.Read();
         }
 
-        private static void Queues()
+        private static void ListCapacity()
         {
+            var numbers = new List<int>();
+            var capacity = -1;
+
+            while(true)
+            {
+                //numbers.Capacity - Gets or sets the total number of elems the internal data structure can hold
+                if (numbers.Capacity != capacity)
+                {
+                    capacity = numbers.Capacity;
+                    Console.WriteLine(capacity);
+                }
+
+                numbers.Add(1);
+            }
+
+            //Eventually: 'Exception of type 'System.OutOfMemoryException' was thrown.'
+            //What's the point:
+            //List starts with cap. of 0 (no capacity to store anything).
+            //As soon we insert the first number - capacity grew to hold 4 items.
+            //When we add the second number - it doubles the size (8)
+            //Third number - 16
+            //Internal algorithm: When list capacity is exceeded - it simply DOUBLES the capacity (it can hold twice as many things)
+        }
+
+        private static void Queues() //FIFO
+        {
+            //Enqueue() - Adds an object to the end of the Queue<T>
+            //Peek() - Returns the object at the beginning of the Queue<T> (without removing it)
+            //Dequeue() - Removes and returns the object at the beginning of the Queue<T>
+            //ToArray() - Copies the Queue<T> elements to a new arr
+
             var employees = new Queue<Employee>();
             employees.Enqueue(new Employee{Name="Scott"});
             employees.Enqueue(new Employee{Name="Alex"});
+            employees.Enqueue(new Employee{Name="Jovan"});
+
+            //employees[0] not possible
 
             while (employees.Count > 0)
             {
                 var employee = employees.Dequeue();
                 Console.WriteLine(employee.Name);
             }
+
+            Console.Read();
         }
 
         private static void Stacks()

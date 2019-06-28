@@ -19,10 +19,10 @@ namespace CollectIt
             //Sets();
             //Linked();
             //CountEmployees();
-            Dictionary();
+            //Dictionary();
             //SortedDictionary();
             //SortedList();
-            //SortedSet();
+            SortedSet();
 
             //after interfaces
             //SortedWithComparer();
@@ -31,6 +31,8 @@ namespace CollectIt
 
         private static void SortedSet()
         {
+            //Similar to HashSet, but keep things in numerical order
+
             var set = new SortedSet<int>();
             set.Add(3);
             set.Add(2);
@@ -40,6 +42,8 @@ namespace CollectIt
             {
                 Console.WriteLine(number);
             }
+
+            Console.Read();
         }
 
         private static void SortedList()
@@ -47,11 +51,13 @@ namespace CollectIt
             var employeesByDepartment = new SortedList<string, List<Employee>>();
 
             employeesByDepartment.Add("Sales", new List<Employee>());
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Jovan" });
             employeesByDepartment["Sales"].Add(new Employee { Name = "Alex" });
 
             employeesByDepartment.Add("Engineering", new List<Employee>());
             employeesByDepartment["Engineering"].Add(new Employee { Name = "Scott" });
             employeesByDepartment["Engineering"].Add(new Employee { Name = "Joy" });
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Adam" });
 
             foreach (var pair in employeesByDepartment)
             {
@@ -61,6 +67,17 @@ namespace CollectIt
                     Console.WriteLine("\t{0}", employee.Name);
                 }
             }
+
+            //Output: [E]ngineering employees will appear first (more examples in CollectIt.Tests.SortedTests)
+            //Same outputs in SortedList() & SortedDictionary() methods
+
+            Console.Read();
+
+            //Important (key differences betweeen SortedList & SortedDictionary):
+            //Very similar to SortedDictionary, but optimized to use at least amount of memory possible,
+            //and allow to iterate as quickly as possible
+
+            //If you are not looking anything by key values and just need to iterate, makes sense to use a SortedList
         }
 
         private static void SortedDictionary()
@@ -68,11 +85,13 @@ namespace CollectIt
             var employeesByDepartment = new SortedDictionary<string, List<Employee>>();
 
             employeesByDepartment.Add("Sales", new List<Employee>());
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Jovan" });
             employeesByDepartment["Sales"].Add(new Employee { Name = "Alex" });
 
             employeesByDepartment.Add("Engineering", new List<Employee>());
             employeesByDepartment["Engineering"].Add(new Employee { Name = "Scott" });
             employeesByDepartment["Engineering"].Add(new Employee { Name = "Joy" });
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Adam" });
 
             foreach (var pair in employeesByDepartment)
             {
@@ -83,6 +102,16 @@ namespace CollectIt
                 }
             }
 
+            //Output: [E]ngineering employees will appear first (more examples in CollectIt.Tests.SortedTests)
+            //Same outputs in SortedList() & SortedDictionary() methods
+
+            Console.Read();
+
+            //Important (key differences betweeen SortedList & SortedDictionary):
+            //Very similar to SortedList, but optimized for efficient INSERTS and REMOVALS (it's going to use
+            //a little more memory, but it will be really quick when acessing, inserting or removing elements)
+
+            //Use it if you are looking things by key/values often
         }
 
         private static void Dictionary()
@@ -90,6 +119,7 @@ namespace CollectIt
             //Allows you to find info quickly because it orders info inside in a way that allows for efficient searches
             //key - value pairs
             //Idea: store different values using keys that make it EASY to find these values
+            //There is no specific sort order
             
             var employeesByName = new Dictionary<string, Employee>(); //<TKey, TValue> TKey = type of the key, TValue = type of the value
             employeesByName.Add("Scott", new Employee { Name="Scott" });
@@ -308,7 +338,7 @@ namespace CollectIt
                 Console.WriteLine(number);
             }
 
-            //Operations that can be performed (examples in CollectIt.Tests.HashSetTests):
+            //Operations that can be performed (more examples in CollectIt.Tests.HashSetTests):
             //IntersectWith()
             //UnionWith()
             //SymmetricExceptWith() //Returns items that are in the first set, or in the second, but NOT in both

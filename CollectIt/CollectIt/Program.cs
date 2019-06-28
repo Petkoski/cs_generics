@@ -14,8 +14,8 @@ namespace CollectIt
         {
             //Arrays();
             //Lists();
-            Queues();
-            //Stacks();
+            //Queues();
+            Stacks();
             //Sets();
             //Linked();
             //CountEmloyees();
@@ -246,17 +246,26 @@ namespace CollectIt
             Console.Read();
         }
 
-        private static void Stacks()
+        private static void Stacks() //LIFO
         {
+            //Push()
+            //Pop()
+            //Peek() - Returns the last added item to the Stack<T> (without removing it)
+            //ToArray() - Copies the Stack<T> elements to a new arr
+
             var employees = new Stack<Employee>();
             employees.Push(new Employee { Name = "Scott" });
             employees.Push(new Employee { Name = "Alex" });
+
+            //employees[0] not possible
 
             while (employees.Count > 0)
             {
                 var employee = employees.Pop();
                 Console.WriteLine(employee.Name);
             }
+
+            Console.Read();
         }
 
         private static void Sets()

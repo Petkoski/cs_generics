@@ -16,8 +16,8 @@ namespace CollectIt
             //Lists();
             //Queues();
             //Stacks();
-            Sets();
-            //Linked();
+            //Sets();
+            Linked();
             //CountEmloyees();
             //Dictionary();
             //SortedDictionary();
@@ -120,6 +120,14 @@ namespace CollectIt
 
         private static void Linked()
         {
+            //LinkedList - double linked list (each item contains Next & Previous pointer)
+            //Strength - it takes constant time for insertion / removal (very efficient)
+            //AddFirst()
+            //AddLast()
+            //AddBefore()
+            //AddAfter()
+            //^ Help you to manipulate the list and insert things at specific locations
+
             var employees = new LinkedList<Employee>();
             employees.AddFirst(new Employee {Name = "Scott"});
 
@@ -133,12 +141,14 @@ namespace CollectIt
 
             Console.WriteLine("--");
 
-            var node = employees.Last;
+            var node = employees.Last; //Gets reference to the last element of the linked list (getting back LinkedListNode, not Employee)
             while (node != null)
             {
                 Console.WriteLine(node.Value.Name);
                 node = node.Previous;
             }
+
+            Console.Read();
         }
 
         private static void Arrays()

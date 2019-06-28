@@ -2,6 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
+/**
+ * Summary:
+ * - Not thread safe:
+ * List<T> - A growing array
+ * Queue<T>, Stack<T> - FIFO & LIFO
+ * HashSet<T> - Unique items only
+ * LinkedList<T> - Flexible inserts
+ * Dictionary<TKey, TValue> - Quick look up by key
+ * SortedSet<T> - Sorted & unique
+ * SortedList<TKey, TValue> - Sorted & memory efficient
+ * SortedDictionary<TKey, TValue> - Sorted, fast inserts & removals
+ * 
+ * - Thread safe:
+ * Concurrent Collections (System.Collections.Concurrent) - Thread safe, you can have multiple writers (adding to the collection without corrupting the data structure) and readers [mimic the above collections]
+ * 
+ * Immutable Collections (NuGet: Microsoft.Bcl.Immutable, it has been renamed to System.Collections.Immutable) - Also thread safe, modifications produce new collections (they don't allow to change a collection once it's created, instead - if you add something to an ImmutableList - you create an entirely new list) [mimic the above collections]
+ * Since no one can modify an existing collection (Immutable Collection) - it can make multithreaded programming easier, sometimes even faster
+ */
+
 namespace CollectIt
 {
     /**
@@ -84,6 +103,7 @@ namespace CollectIt
         {
             var employeesByDepartment = new SortedDictionary<string, List<Employee>>();
 
+            employeesByDepartment.Add("Sales", new List<Employee>());
             employeesByDepartment.Add("Sales", new List<Employee>());
             employeesByDepartment["Sales"].Add(new Employee { Name = "Jovan" });
             employeesByDepartment["Sales"].Add(new Employee { Name = "Alex" });

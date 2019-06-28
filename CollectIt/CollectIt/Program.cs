@@ -17,9 +17,9 @@ namespace CollectIt
             //Queues();
             //Stacks();
             //Sets();
-            Linked();
-            //CountEmloyees();
-            //Dictionary();
+            //Linked();
+            //CountEmployees();
+            Dictionary();
             //SortedDictionary();
             //SortedList();
             //SortedSet();
@@ -87,25 +87,37 @@ namespace CollectIt
 
         private static void Dictionary()
         {
-            var employeesByName = new Dictionary<string, Employee>();
-            employeesByName.Add("Scott", new Employee { Name="Scott"});
-            employeesByName.Add("Alex", new Employee { Name="Alex"});
+            //Allows you to find info quickly because it orders info inside in a way that allows for efficient searches
+            //key - value pairs
+            //Idea: store different values using keys that make it EASY to find these values
+            
+            var employeesByName = new Dictionary<string, Employee>(); //<TKey, TValue> TKey = type of the key, TValue = type of the value
+            employeesByName.Add("Scott", new Employee { Name="Scott" });
+            employeesByName.Add("Alex", new Employee { Name="Alex" });
+            employeesByName.Add("Jovan", new Employee { Name="Jovan" });
+            //employeesByName.Add("Jovan", new Employee { Name="Jovan" }); //Exception - not allowed to add duplicate keys to a Dictionary
+
+            //Accessing an employee by name
+            Console.WriteLine(employeesByName["Jovan"].Name);
 
             foreach (var pair in employeesByName)
             {
-                Console.WriteLine(pair.Value.Name);
+                Console.WriteLine(pair.Key + " : " + pair.Value.Name);
             }
 
             Console.WriteLine("--");
 
+            //New Dictionary of string (key) and List<Employee> (value)
             var employeesByDepartment = new Dictionary<string, List<Employee>>();
 
             employeesByDepartment.Add("Sales", new List<Employee>());
             employeesByDepartment["Sales"].Add(new Employee { Name = "Alex" });
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Jovan" });
 
             employeesByDepartment.Add("Engineering", new List<Employee>());
             employeesByDepartment["Engineering"].Add(new Employee {Name = "Scott"});
             employeesByDepartment["Engineering"].Add(new Employee { Name = "Joy" });
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Jovan" });
 
             foreach (var pair in employeesByDepartment)
             {
@@ -116,6 +128,7 @@ namespace CollectIt
                 }
             }
 
+            Console.Read();
         }
 
         private static void Linked()
@@ -316,7 +329,7 @@ namespace CollectIt
             Console.Read();
         }
 
-        static void CountEmloyees()
+        static void CountEmployees()
         {
             var employeesByName = new SortedList<string, List<Employee>>();
 

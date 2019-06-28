@@ -15,8 +15,8 @@ namespace CollectIt
             //Arrays();
             //Lists();
             //Queues();
-            Stacks();
-            //Sets();
+            //Stacks();
+            Sets();
             //Linked();
             //CountEmloyees();
             //Dictionary();
@@ -270,29 +270,40 @@ namespace CollectIt
 
         private static void Sets()
         {
+            //HashSet - collection concerned with WHAT you add (collection of UNIQUE items, no duplicates inside)
+
             var numbers = new HashSet<int>();
             numbers.Add(3);
             numbers.Add(2);
             numbers.Add(1);            
-            numbers.Add(2);
+            numbers.Add(2); //This call is ignored, Add() method returns a false
+
+            //numbers[0] not possible, we can never know which item is going to be the first item in the set (can't index into it)
 
             foreach (var number in numbers)
             {
                 Console.WriteLine(number);
             }
 
+            //Operations that can be performed (examples in CollectIt.Tests.HashSetTests):
+            //IntersectWith()
+            //UnionWith()
+            //SymmetricExceptWith() //Returns items that are in the first set, or in the second, but NOT in both
+
             Console.WriteLine("\n---\n");
 
             var employees = new HashSet<Employee>();
             var scott = new Employee() {Name = "Scott"};
             employees.Add(scott);
-            employees.Add(scott);            
-            employees.Add(new Employee {Name = "Scott"});
+            employees.Add(scott); //Ignored, same obj reference         
+            employees.Add(new Employee {Name = "Scott"}); //It's not considered as a duplicate (2 different obj references)
 
             foreach (var employee in employees)
             {
                 Console.WriteLine(employee.Name);
             }
+
+            Console.Read();
         }
 
         static void CountEmloyees()

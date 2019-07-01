@@ -52,9 +52,12 @@ namespace CollectIt
 
             //Prevent adding employees with same name to a department
             //and sort the employees within each department
-            RemoveDuplicatesAndSortWithComparer();
+            //RemoveDuplicatesAndSortWithComparer();
 
-            //SortedAndClean();
+            //Prevent adding employees with same name to a department
+            //and sort the employees within each department
+            //+ remove all traces of generics from the business code (that's a good goal)
+            SortedAndClean();
         }
 
         private static void SortedSet()
@@ -473,13 +476,19 @@ namespace CollectIt
 
         static void SortedAndClean()
         {
-             var employeesByDepartment = new DepartmentList();
+            //Prevent adding employees with same name to a department
+            //and sort the employees within each department
+            //+ remove all traces of generics from the business code (that's a good goal)
 
-            employeesByDepartment.Add("Sales", new Employee { Name = "Alex" })
-                                 .Add("Sales", new Employee { Name = "Alex" });
+            var employeesByDepartment = new DepartmentCollection();
 
-            employeesByDepartment.Add("Engineering",new Employee { Name = "Scott" })
-                                 .Add("Engineering", new Employee { Name = "Joy" });
+            employeesByDepartment.Add("Sales", new Employee { Name = "Joy" })
+                                 .Add("Sales", new Employee { Name = "Deni" })
+                                 .Add("Sales", new Employee { Name = "Deni" });
+
+            employeesByDepartment.Add("Engineering", new Employee { Name = "Scott" })
+                                 .Add("Engineering", new Employee { Name = "Alex" })
+                                 .Add("Engineering", new Employee { Name = "Jovan" });
 
             foreach (var pair in employeesByDepartment)
             {
@@ -489,6 +498,8 @@ namespace CollectIt
                     Console.WriteLine("\t{0}", employee.Name);
                 }
             }
+
+            Console.Read();
         }
     }
 }

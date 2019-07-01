@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CollectIt
 {
@@ -9,13 +8,13 @@ namespace CollectIt
         public string Name { get; set; }
     }
 
-    public class DepartmentList : SortedList<string, HashSet<Employee>>
+    public class DepartmentCollection : SortedDictionary<string, SortedSet<Employee>>
     {
-        public DepartmentList Add(string departmentName, Employee employee)
+        public DepartmentCollection Add(string departmentName, Employee employee)
         {
             if (!ContainsKey(departmentName))
             {
-                Add(departmentName, new HashSet<Employee>(new EmployeeComparer()));
+                Add(departmentName, new SortedSet<Employee>(new EmployeeComparer2()));
             }
             this[departmentName].Add(employee);
             return this;

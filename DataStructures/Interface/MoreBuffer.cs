@@ -103,3 +103,17 @@ namespace DataStructures.Interface
         }
     }
 }
+
+/**
+ * Other generic interfaces (abstraction of the concrete class, defined in System.Collections.Generic):
+ * You can use them when building a custom data structure
+ * 
+ * Name:                        Purpose:                    Implemented by:
+ * IList<T>                     Access by index             List<T>, SortedList<T>
+ * ICollection<T>               Add, remove and search      List<T>, Dictionary<K, V>, HashSet<T>
+ * IDictionary<K, V>            Access by key               Dictionary<K, V >
+ * IReadOnlyCollection<T>       Countable collection        List<T>, Dictionary<K, V>
+ * ISet<T>                      Set based operations        HashSet<T>
+ * IComparer<T>,                Compare objects
+ * IEqualityComparer<T>
+ */

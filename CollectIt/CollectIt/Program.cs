@@ -41,10 +41,19 @@ namespace CollectIt
             //Dictionary();
             //SortedDictionary();
             //SortedList();
-            SortedSet();
+            //SortedSet();
 
-            //after interfaces
-            //SortedWithComparer();
+            /**
+             * After interfaces
+             */
+
+            //Prevent adding employees with same name to a department
+            //RemoveDuplicatesWithComparer();
+
+            //Prevent adding employees with same name to a department
+            //and sort the employees within each department
+            RemoveDuplicatesAndSortWithComparer();
+
             //SortedAndClean();
         }
 
@@ -394,17 +403,25 @@ namespace CollectIt
             }
         }
 
-        private static void SortedWithComparer()
+        private static void RemoveDuplicatesWithComparer()
         {
-            var employeesByDepartment = new SortedList<string, HashSet<Employee>>();
+            //Prevent adding employees with same name to a department
+
+            var employeesByDepartment = new SortedDictionary<string, HashSet<Employee>>();
+
+            //One of the overloaded constructor versions for the HashSet<>() allows to pass in - AN OBJECT THAT IMPLEMENTS IEqualityComparer<T> [EmployeeComparer() in our case]:
+            //HashSet<T>(IEqualityComparer<T>)
+            //HashSet will use that object to compare the incoming items to see if they are equal
 
             employeesByDepartment.Add("Sales", new HashSet<Employee>(new EmployeeComparer()));
-            employeesByDepartment["Sales"].Add(new Employee { Name = "Alex" });
-            employeesByDepartment["Sales"].Add(new Employee { Name = "Alex" });
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Joy" });
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Deni" });
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Deni" });
 
             employeesByDepartment.Add("Engineering", new HashSet<Employee>(new EmployeeComparer()));
             employeesByDepartment["Engineering"].Add(new Employee { Name = "Scott" });
-            employeesByDepartment["Engineering"].Add(new Employee { Name = "Joy" });
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Alex" });
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Jovan" });
 
             foreach (var pair in employeesByDepartment)
             {
@@ -414,6 +431,44 @@ namespace CollectIt
                     Console.WriteLine("\t{0}", employee.Name);
                 }
             }
+
+            Console.Read();
+        }
+
+        private static void RemoveDuplicatesAndSortWithComparer()
+        {
+            //Prevent adding employees with same name to a department
+            //and sort the employees within each department
+
+            //We will use SortedSet for each employee, but SortedSet<>() constructor
+            //is a little bit different. One of the versions doesn't want IEqualityComparer<T>,
+            //but IComparer<T>
+            //IEqualityComparer<T> just checks to see if 2 objects are equal
+            //IComparer<T> has to figure out if an object is less/greater than another or equal to. We
+            //don't need to prevent just duplicates, but also to keep things in the right order.
+
+            var employeesByDepartment = new SortedDictionary<string, SortedSet<Employee>>();
+            
+            employeesByDepartment.Add("Sales", new SortedSet<Employee>(new EmployeeComparer2()));
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Joy" });
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Deni" });
+            employeesByDepartment["Sales"].Add(new Employee { Name = "Deni" });
+
+            employeesByDepartment.Add("Engineering", new SortedSet<Employee>(new EmployeeComparer2()));
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Scott" });
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Alex" });
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Jovan" });
+
+            foreach (var pair in employeesByDepartment)
+            {
+                Console.WriteLine("Department {0}", pair.Key);
+                foreach (var employee in pair.Value)
+                {
+                    Console.WriteLine("\t{0}", employee.Name);
+                }
+            }
+
+            Console.Read();
         }
 
         static void SortedAndClean()

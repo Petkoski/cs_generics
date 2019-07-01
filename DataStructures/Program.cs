@@ -1,5 +1,6 @@
 ﻿using System;
-using DataStructures.Basic;
+//using DataStructures.Basic; //Only for CH1
+using DataStructures.Interface;
 
 namespace DataStructures
 {
@@ -7,7 +8,12 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var buffer = new CircularBuffer<double>(3);
+            //Chapter 01:
+            //var buffer = new CircularBuffer<double>(3); //Only for CH1
+
+            //Chapter 03:
+            //var buffer = new Buffer<double>(); //CH3 (no capacity)
+            var buffer = new CircularBuffer<double>(3); //CH3 (with capacity, default = 10)
 
             //var b1 = new CircularBuffer<string>();
             //var b2 = new CircularBuffer<string>();
@@ -29,7 +35,8 @@ namespace DataStructures
             Console.Read();
         }
 
-        private static void ProcessBuffer(CircularBuffer<double> buffer)
+        //private static void ProcessBuffer(CircularBuffer<double> buffer) //Using generic class (CH1)
+        private static void ProcessBuffer(IBuffer<double> buffer) //Using generic interface (CH3)
         {
             //Display members:
             Console.WriteLine("Buffer: ");
@@ -48,7 +55,8 @@ namespace DataStructures
             //Console.WriteLine(sum);
         }
 
-        private static void ProcessInput(CircularBuffer<double> buffer)
+        //private static void ProcessInput(CircularBuffer<double> buffer) //Using generic class (CH1)
+        private static void ProcessInput(IBuffer<double> buffer) //Using generic interface (CH3)
         {
             while (true)
             {

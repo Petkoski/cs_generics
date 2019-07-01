@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace DataStructures.Interface
 {
-    public interface IBuffer<T> //Interfaces can also take generic type parameters
+    //Interfaces can also take generic type parameters
+    //Anything that is an IBuffer<T>, has to be an IEnumerable<T> too (all our buffers will have GetEnumerator() method)
+    //Implementing IEnumerable<T> will require two methods:
+    //1) IEnumerator<T> GetEnumerator (returns a generic IEnumerator<T>)
+    //2) IEnumerator GetEnumerator() [because anything that is IEnumerable<T> is also an IEnumerable (defined: public interface IEnumerable<out T> : IEnumerable in System.Collections.Generic)]
+    public interface IBuffer<T> : IEnumerable<T>
     {
         void Write(T value);
         T Read(); //We want things to be strongly typed
@@ -33,6 +39,25 @@ namespace DataStructures.Interface
             get { return _queue.Count == 0; } //Returns true if the count is 0
         }
         //virtual 
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            //return _queue.GetEnumerator(); //Very simple implementation
+
+            //Our own:
+            foreach (var item in _queue)
+            {
+                // ...
+                yield return item; //Magic C# syntax that will auto build the state machine to implement the IEnumerator<T>, it allows these items to be handed back one-at-a-time in a lazy manner
+            }
+        }
+
+        //public IEnumerator GetEnumerator() //Not possible, C# compiler sees: Type 'Buffer<T>' already defines a member called 'GetEnumerator' with the same parameter types
+        //The trick used to implement this method:
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator(); //Calls the previous version from above: public IEnumerator<T> GetEnumerator()
+        }
     }
 
     //A new CircularBuffer implementation (for CH3)

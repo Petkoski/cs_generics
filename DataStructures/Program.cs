@@ -11,10 +11,6 @@ namespace DataStructures
             //Chapter 01:
             //var buffer = new CircularBuffer<double>(3); //Only for CH1
 
-            //Chapter 03:
-            //var buffer = new Buffer<double>(); //CH3 (no capacity)
-            var buffer = new CircularBuffer<double>(3); //CH3 (with capacity, default = 10)
-
             //var b1 = new CircularBuffer<string>();
             //var b2 = new CircularBuffer<string>();
             //var b3 = new CircularBuffer<int>();
@@ -29,7 +25,23 @@ namespace DataStructures
              * that's better for perfomance.
              */
 
+            //Chapter 03:
+            //var buffer = new Buffer<double>(); //CH3 (no capacity)
+            var buffer = new CircularBuffer<double>(3); //CH3 (with capacity, default = 10)
+
             ProcessInput(buffer);
+
+            //foreach (var item in buffer) { Console.WriteLine(item); } //Not possible because buffer is not Enumerable (doesn't have public GetEnumerator() method)
+
+            //To fix that, we should implement IEnumerable<T> in IBuffer<T>
+            //IEnumerable<T> - nearly every generic collection implements it, all basic LINQ query operators are built on top of it, even strings support it
+            //After implementation of IEnumerable<T>, now for-each works (in both Buffer<T> & CircularBuffer<T>):
+
+            foreach (var item in buffer)
+            {
+                Console.WriteLine(item);
+            }
+
             ProcessBuffer(buffer);
 
             Console.Read();

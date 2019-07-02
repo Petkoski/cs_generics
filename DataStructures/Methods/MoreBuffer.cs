@@ -11,7 +11,14 @@ namespace DataStructures.Methods
         void Write(T value);
         T Read();
         bool IsEmpty { get; }
+        //Generic method:
         IEnumerable<TOut> As<TOut>();
+        /**
+         * Returns: IEnumerable<TOut>
+         * Method name: As<TOut>() //TOut - type of output we are expecting
+         * TOut type parameter is only available to this method
+         * Invoking this method in DataStructures.Program
+         */
     }
 
     public class Buffer<T> : IBuffer<T>
@@ -36,11 +43,11 @@ namespace DataStructures.Methods
 
         public IEnumerable<TOut> As<TOut>()
         {
-            var converter = TypeDescriptor.GetConverter(typeof (T));
+            var converter = TypeDescriptor.GetConverter(typeof (T)); //Return a converter for the provided type T
             foreach (var item in _queue)
             {
-                var result = converter.ConvertTo(item, typeof (TOut));
-                yield return (TOut)result;
+                var result = converter.ConvertTo(item, typeof (TOut)); //Convert each item from the queue (from type T to type TOut)
+                yield return (TOut)result; //Builds an IEnumerable
             }
         }
 

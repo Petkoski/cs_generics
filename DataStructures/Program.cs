@@ -1,6 +1,7 @@
 ﻿using System;
 //using DataStructures.Basic; //Only for CH1
-using DataStructures.Interface;
+//using DataStructures.Interface; //Only for CH3
+using DataStructures.Methods; //Only for CH4
 
 namespace DataStructures
 {
@@ -8,7 +9,9 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            //Chapter 01:
+            /**
+             * Chapter 01 - C# Generics - Why Generics
+             */
             //var buffer = new CircularBuffer<double>(3); //Only for CH1
 
             //var b1 = new CircularBuffer<string>();
@@ -25,11 +28,18 @@ namespace DataStructures
              * that's better for perfomance.
              */
 
-            //Chapter 03:
-            //var buffer = new Buffer<double>(); //CH3 (no capacity)
-            var buffer = new CircularBuffer<double>(3); //CH3 (with capacity, default = 10)
+            //ProcessInput(buffer);
+            //ProcessBuffer(buffer);
 
-            ProcessInput(buffer);
+
+            /**
+             * Chapter 03 - Generic Classes and Interfaces
+             */
+
+            //var buffer = new Buffer<double>(); //CH3 (no capacity)
+            //var buffer = new CircularBuffer<double>(3); //CH3 (with capacity, default = 10)
+
+            //ProcessInput(buffer);
 
             //foreach (var item in buffer) { Console.WriteLine(item); } //Not possible because buffer is not Enumerable (doesn't have public GetEnumerator() method)
 
@@ -37,7 +47,27 @@ namespace DataStructures
             //IEnumerable<T> - nearly every generic collection implements it, all basic LINQ query operators are built on top of it, even strings support it
             //After implementation of IEnumerable<T>, now for-each works (in both Buffer<T> & CircularBuffer<T>):
 
-            foreach (var item in buffer)
+            //ProcessInput(buffer);
+            //foreach (var item in buffer)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            //ProcessBuffer(buffer);
+
+
+            /**
+             * Chapter 04 - Generic Methods and Delegates
+             */
+
+            var buffer = new Buffer<double>(); //CH4
+            //T (for the generic class) = double
+
+            ProcessInput(buffer);
+
+            var asInts = buffer.As<int>(); //Invoking generic method
+            //TOut (for the generic method) = int
+
+            foreach (var item in asInts)
             {
                 Console.WriteLine(item);
             }

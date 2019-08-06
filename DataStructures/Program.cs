@@ -84,8 +84,43 @@ namespace DataStructures
             //}
 
             //CH04-04:
-            var consoleOut = new Printer<double>(ConsoleWrite);
-            buffer.DumpWithDelegate(consoleOut);
+            //var consoleOut = new Printer<double>(ConsoleWrite);
+            //buffer.DumpWithDelegate(consoleOut);
+
+            //CH04-05:
+            //Inside .NET there are 3 general purpose delegate types:
+
+            //1) Action (always returns void)
+            //Example: Action<double> - takes a double and returns void
+
+            //First way (using named method):
+            Action<double> print1 = ConsoleWrite;
+
+            //Second way (anonymous delegate):
+            Action<double> print2 = delegate (double data)
+            {
+                Console.WriteLine(data);
+            };
+
+            //Third way (easier anonymous delegate with lambda expression):
+            Action<double> print3 = d => Console.WriteLine(d);
+
+            buffer.DumpWithActionDelegate(print3);
+
+
+            //2) Func (there is always at least 1 generic type argument to a Func because Func
+            //always has to return a value. Last generic argument passed is the return type)
+            //Example: Func<double, string> - takes a double and returns a string
+            Func<double, double> square = d => d * d;
+            Func<double, double, double> add = (x, y) => x + y;
+            //Most of the LINQ operators (that operate on IEnumerable<T>) use Func of different types: WHERE, ORDERBY, SELECT, JOIN, GROUPBY.
+
+
+            //3) Predicate (always returns a bool)
+            //Example: Predicate<double> - takes a double and returns a bool
+            Predicate<double> isLessThanTen = d => d < 10;
+
+            //Console.WriteLine(isLessThanTen(square(add(3, 5))));
 
             ProcessBuffer(buffer);
 

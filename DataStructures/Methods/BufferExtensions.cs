@@ -37,11 +37,20 @@ namespace DataStructures.Methods
             }
         }
 
+        //Delegates:
         public static void DumpWithDelegate<T>(this IBuffer<T> buffer, Printer<T> print)
         {
             foreach (var item in buffer)
             {
                 print(item); //CH04-04
+            }
+        }
+
+        public static void DumpWithActionDelegate<T>(this IBuffer<T> buffer, Action<T> print)
+        {
+            foreach (var item in buffer)
+            {
+                print(item); //CH04-05
             }
         }
     }

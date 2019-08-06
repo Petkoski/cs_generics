@@ -105,7 +105,7 @@ namespace DataStructures
             //Third way (easier anonymous delegate with lambda expression):
             Action<double> print3 = d => Console.WriteLine(d);
 
-            buffer.DumpWithActionDelegate(print3);
+            //buffer.DumpWithActionDelegate(print3);
 
 
             //2) Func (there is always at least 1 generic type argument to a Func because Func
@@ -121,6 +121,18 @@ namespace DataStructures
             Predicate<double> isLessThanTen = d => d < 10;
 
             //Console.WriteLine(isLessThanTen(square(add(3, 5))));
+
+            //CH04-06:
+            //4) Converter (another generic delegate from System namespace)
+            //Example: Converter<double, string> - takes a double and returns a string
+            Converter<double, DateTime> converter = d => new DateTime(2010, 1, 1).AddDays(d);
+
+            var asDates = buffer.Map(converter);
+
+            foreach (var item in asDates)
+            {
+                Console.WriteLine(item);
+            }
 
             ProcessBuffer(buffer);
 

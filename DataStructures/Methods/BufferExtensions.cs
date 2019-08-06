@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System;
+using System.Linq;
 
 /**
  * Generic method does not need to be part of a generic class or a generic interface.
@@ -38,20 +39,35 @@ namespace DataStructures.Methods
         }
 
         //Delegates:
+        //CH04-04
         public static void DumpWithDelegate<T>(this IBuffer<T> buffer, Printer<T> print)
         {
             foreach (var item in buffer)
             {
-                print(item); //CH04-04
+                print(item);
             }
         }
 
+        //CH04-05
         public static void DumpWithActionDelegate<T>(this IBuffer<T> buffer, Action<T> print)
         {
             foreach (var item in buffer)
             {
-                print(item); //CH04-05
+                print(item);
             }
+        }
+
+        //CH04-06
+        public static IEnumerable<TOut> Map<T, TOut>(this IBuffer<T> buffer, Converter<T, TOut> converter)
+        {
+            foreach (var item in buffer)
+            {
+                TOut result = converter(item);
+                yield return result;
+            }
+
+            //Or:
+            //return buffer.Select(i => converter(i));
         }
     }
 }

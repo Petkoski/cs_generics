@@ -64,8 +64,14 @@ namespace DataStructures
 
             ProcessInput(buffer);
 
-            var asInts = buffer.As<int>(); //Invoking generic method
+            //CH04-02:
+            //var asInts = buffer.As<int>(); //Invoking generic method (defined in the class Buffer<T>)
             //TOut (for the generic method) = int
+
+            //CH04-03:
+            //Invoking extension methods (defined outside the class, in our case in: DataStructures.Methods.BufferExtensions)
+            var asInts = buffer.AsEnumerableOf<double, int>();
+            buffer.Dump(); //Don't need to pass the generic type param (even that the method's signature is - void Dump<T>)
 
             foreach (var item in asInts)
             {

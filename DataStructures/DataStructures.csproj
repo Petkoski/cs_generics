@@ -46,6 +46,7 @@
     <Compile Include="Enumerable\MoreBuffer.cs" />
     <Compile Include="Events\MoreBuffer.cs" />
     <Compile Include="Interface\MoreBuffer.cs" />
+    <Compile Include="Methods\BufferExtensions.cs" />
     <Compile Include="Methods\MoreBuffer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

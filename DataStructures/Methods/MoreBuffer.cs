@@ -49,6 +49,7 @@ namespace DataStructures.Methods
                 var result = converter.ConvertTo(item, typeof (TOut)); //Convert each item from the queue (from type T to type TOut)
                 yield return (TOut)result; //Builds an IEnumerable
             }
+            //We have access to both: T (from the class) & TOut (from the method)
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -84,8 +85,6 @@ namespace DataStructures.Methods
         }
     }
 
-
-
     public class CircularBuffer<T> : Buffer<T>
     {
         readonly int _capacity;
@@ -118,5 +117,4 @@ namespace DataStructures.Methods
             get { return _queue.Count >= _capacity; }
         }
     }
-
 }

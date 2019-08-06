@@ -7,6 +7,11 @@ namespace DataStructures
 {
     class Program
     {
+        static void ConsoleWrite(double data)
+        {
+            Console.WriteLine(data);
+        }
+
         static void Main(string[] args)
         {
             /**
@@ -71,12 +76,16 @@ namespace DataStructures
             //CH04-03:
             //Invoking extension methods (defined outside the class, in our case in: DataStructures.Methods.BufferExtensions)
             var asInts = buffer.AsEnumerableOf<double, int>();
-            buffer.Dump(); //Don't need to pass the generic type param (even that the method's signature is - void Dump<T>)
+            //buffer.Dump(); //Don't need to pass the generic type param (even that the method's signature is - void Dump<T>)
 
-            foreach (var item in asInts)
-            {
-                Console.WriteLine(item);
-            }
+            //foreach (var item in asInts)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //CH04-04:
+            var consoleOut = new Printer<double>(ConsoleWrite);
+            buffer.DumpWithDelegate(consoleOut);
 
             ProcessBuffer(buffer);
 

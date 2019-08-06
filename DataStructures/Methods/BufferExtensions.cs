@@ -15,6 +15,8 @@ using System;
 
 namespace DataStructures.Methods
 {
+    public delegate void Printer<T>(T data);
+
     public static class BufferExtensions
     {
         public static IEnumerable<TOut> AsEnumerableOf<T, TOut>(this IBuffer<T> buffer) //Parameter that has 'this' keywoard in front of it (that's what EXTENSION methods are all about). We are making it available for all IBuffer<T> buffers.
@@ -31,7 +33,15 @@ namespace DataStructures.Methods
         {
             foreach (var item in buffer)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(item); //CH04-03
+            }
+        }
+
+        public static void DumpWithDelegate<T>(this IBuffer<T> buffer, Printer<T> print)
+        {
+            foreach (var item in buffer)
+            {
+                print(item); //CH04-04
             }
         }
     }

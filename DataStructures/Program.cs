@@ -64,10 +64,10 @@ namespace DataStructures
              * Chapter 04 - Generic Methods and Delegates
              */
 
-            var buffer = new Buffer<double>(); //CH4
+            //var buffer = new Buffer<double>(); //CH4
             //T (for the generic class) = double
 
-            ProcessInput(buffer);
+            //ProcessInput(buffer);
 
             //CH04-02:
             //var asInts = buffer.As<int>(); //Invoking generic method (defined in the class Buffer<T>)
@@ -75,7 +75,7 @@ namespace DataStructures
 
             //CH04-03:
             //Invoking extension methods (defined outside the class, in our case in: DataStructures.Methods.BufferExtensions)
-            var asInts = buffer.AsEnumerableOf<double, int>();
+            //var asInts = buffer.AsEnumerableOf<double, int>();
             //buffer.Dump(); //Don't need to pass the generic type param (even that the method's signature is - void Dump<T>)
 
             //foreach (var item in asInts)
@@ -127,16 +127,28 @@ namespace DataStructures
             //Example: Converter<double, string> - takes a double and returns a string
             Converter<double, DateTime> converter = d => new DateTime(2010, 1, 1).AddDays(d);
 
-            var asDates = buffer.Map(converter);
+            //var asDates = buffer.Map(converter);
 
-            foreach (var item in asDates)
-            {
-                Console.WriteLine(item);
-            }
+            //foreach (var item in asDates)
+            //{
+            //    Console.WriteLine(item);
+            //}
 
-            ProcessBuffer(buffer);
+            //CH04-07:
+            var buffer2 = new CircularBuffer<double>(capacity: 3);
+            buffer2.ItemDiscarded += ItemDiscarded;
+
+            ProcessInput(buffer2);
+            ProcessBuffer(buffer2);
+
+            //ProcessBuffer(buffer);
 
             Console.Read();
+        }
+
+        private static void ItemDiscarded(object sender, ItemDiscardedEventArgs<double> e)
+        {
+            Console.WriteLine("Buffer full. Discarding: {0}. New item: {1}.", e.ItemDiscarded, e.NewItem);
         }
 
         //private static void ProcessBuffer(CircularBuffer<double> buffer) //Using generic class (CH1)

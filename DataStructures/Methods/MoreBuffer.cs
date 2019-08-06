@@ -24,10 +24,10 @@ namespace DataStructures.Methods
     public class Buffer<T> : IBuffer<T>
     {
         readonly protected Queue<T> _queue = new Queue<T>();
- 
+
         public virtual void Write(T value)
         {
-            _queue.Enqueue(value);    
+            _queue.Enqueue(value);
         }
 
         public virtual T Read()
@@ -39,7 +39,6 @@ namespace DataStructures.Methods
         {
             get { return _queue.Count == 0; }
         }
-
 
         public IEnumerable<TOut> As<TOut>()
         {
@@ -101,11 +100,24 @@ namespace DataStructures.Methods
 
         public override void Write(T value)
         {
+            base.Write(value);
             if (_queue.Count > _capacity)
             {
-                _queue.Dequeue();
+                var discard = _queue.Dequeue();
+                OnItemDiscarded(discard, value);
             }
         }
+
+        private void OnItemDiscarded(T discard, T value)
+        {
+            if (ItemDiscarded != null)
+            {
+                var args = new ItemDiscardedEventArgs<T>(discard, value);
+                ItemDiscarded(this, args); //Invoking the delegate
+            }
+        }
+
+        public event EventHandler<ItemDiscardedEventArgs<T>> ItemDiscarded; //Essentially a delegate
 
         public int Capacity
         {
@@ -116,5 +128,17 @@ namespace DataStructures.Methods
         {
             get { return _queue.Count >= _capacity; }
         }
+    }
+
+    public class ItemDiscardedEventArgs<T> : EventArgs
+    {
+        public ItemDiscardedEventArgs(T discard, T newitem)
+        {
+            ItemDiscarded = discard;
+            NewItem = newitem;
+        }
+
+        public T ItemDiscarded { get; set; }
+        public T NewItem { get; set; }
     }
 }

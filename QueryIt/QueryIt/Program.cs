@@ -14,8 +14,8 @@ namespace QueryIt
             {
                 AddEmployees(employeeRepository);
                 CountEmployees(employeeRepository);
+                QueryEmployees(employeeRepository);
                 //AddManagers(employeeRepository);
-                //QueryEmployees(employeeRepository);
                 //DumpPeople(employeeRepository);
             }
 

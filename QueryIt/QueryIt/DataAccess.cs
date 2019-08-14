@@ -16,13 +16,41 @@ namespace QueryIt
     /**
      * Each repository must be disposable (provides a mechanism for releasing unmanaged resources)
      */
-    public interface IRepository<T> : IDisposable
+    /**
+     * IRepository<T> has NO generic modifier, this is called invariant generic type parameter. As the
+     * name implies there is no variance (no "wiggle room"). The generic type used as an argument is the
+     * type we have to use. No ability to treat IRepository<Employee> as an IRepository<Person>.
+     * Doing that requires covariance (<out T>). Methods inside the interface are allowed to return a type
+     * that is more DERIVED than the type specified by the generic type parameter. Example:
+     * public interface IEnumerable<out T> : IEnumerable
+     * {
+     *     IEnumerator<T> GetEnumerator();
+     * }
+     * A covariant interface (like IEnumerable) would allow GetEnumerator() to return 'IEnumerator<Employee>' 
+     * even when T is type 'Person'. Employee is more derived than Person. In C# that does require an 'out'
+     * modifier to explicitely make the interface covariant. 'out' is a generic modifier, it makes a 
+     * parameter covariant.
+     * 
+     * Covariance only works with delegates and interfaces.
+     * 
+     * Covariance is only supported when having methods RETURNING a covariant type parameter. It's
+     * dangerous and illegal when methods take parameters of type T (like Add() & Delete() below).
+     * If we want to share DumpPeople() with both Employee & Person objects, we can define another interface
+     * IReadOnlyRepository<out T> (covariant) that includes JUST the methods that RETURN items of type T.
+     */
+    public interface IRepository<T> : IReadOnlyRepository<T>, IDisposable
     {
         void Add(T newEntity);
         void Delete(T entity);
         int Commit();
+        //T FindById(int id);
+        //IQueryable<T> FindAll(); //Return all entities as IQueryable<T>
+    }
+
+    public interface IReadOnlyRepository<out T> : IDisposable //Covariant
+    {
         T FindById(int id);
-        IQueryable<T> FindAll(); //Return all entities as IQueryable<T>
+        IQueryable<T> FindAll();
     }
 
     /**

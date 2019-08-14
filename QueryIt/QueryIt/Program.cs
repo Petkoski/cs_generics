@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -15,8 +16,10 @@ namespace QueryIt
                 AddEmployees(employeeRepository);
                 CountEmployees(employeeRepository);
                 QueryEmployees(employeeRepository);
+                DumpPeople(employeeRepository);
                 //AddManagers(employeeRepository);
-                //DumpPeople(employeeRepository);
+
+                //IEnumerable<Person> temp = employeeRepository.FindAll(); //Legal
             }
 
             Console.Read();
@@ -28,7 +31,7 @@ namespace QueryIt
             employeeRepository.Commit();
         }
 
-        private static void DumpPeople(IRepository<Employee> employeeRepository)
+        private static void DumpPeople(IReadOnlyRepository<Person> employeeRepository)
         {
             var employees = employeeRepository.FindAll();
             foreach (var employee in employees)

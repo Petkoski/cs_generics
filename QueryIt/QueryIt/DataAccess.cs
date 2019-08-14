@@ -37,12 +37,12 @@ namespace QueryIt
      * dangerous and illegal when methods take parameters of type T (like Add() & Delete() below).
      * If we want to share DumpPeople() with both Employee & Person objects, we can define another interface
      * IReadOnlyRepository<out T> (covariant) that includes JUST the methods that RETURN items of type T.
+     * 
+     * Contravariance uses the 'in' modifier. Allows to use an ISomething of Employee as an ISomething of
+     * Manager (to use more derived type there).
      */
-    public interface IRepository<T> : IReadOnlyRepository<T>, IDisposable
+    public interface IRepository<T> : IReadOnlyRepository<T>, IWriteOnlyRepository<T>, IDisposable
     {
-        void Add(T newEntity);
-        void Delete(T entity);
-        int Commit();
         //T FindById(int id);
         //IQueryable<T> FindAll(); //Return all entities as IQueryable<T>
     }
@@ -51,6 +51,19 @@ namespace QueryIt
     {
         T FindById(int id);
         IQueryable<T> FindAll();
+        //Covariance uses the generic modifier <out T> and T is used only as an OUTPUT for the
+        //methods inside this interface
+    }
+
+    public interface IWriteOnlyRepository<in T> : IDisposable //Contravariant
+    {
+        void Add(T newEntity);
+        void Delete(T entity);
+        int Commit();
+        //Contravariance uses the generic modifier <in T> and T is used only as an INPUT for the
+        //methods inside this interface
+        //This interface does not inherit any other interfaces where T is used as a return type. In this
+        //interface definition, T is strictly just an input (so it can be contravariant). 
     }
 
     /**

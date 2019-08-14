@@ -14,10 +14,10 @@ namespace QueryIt
             using (IRepository<Employee> employeeRepository = new SqlRepository<Employee>(new EmployeeDb("Data Source=DESKTOP-4Q6L9RH\\MSSQLSERVER17;Initial Catalog=GenericsDb1;Persist Security Info=True;User ID=jovan;Password=EX8O25um4n7fn")))
             {
                 AddEmployees(employeeRepository);
+                AddManagers(employeeRepository);
                 CountEmployees(employeeRepository);
                 QueryEmployees(employeeRepository);
                 DumpPeople(employeeRepository);
-                //AddManagers(employeeRepository);
 
                 //IEnumerable<Person> temp = employeeRepository.FindAll(); //Legal
             }
@@ -25,19 +25,25 @@ namespace QueryIt
             Console.Read();
         }
 
-        private static void AddManagers(IRepository<Employee> employeeRepository)
-        {
-            employeeRepository.Add(new Manager { Name = "Alex" });
-            employeeRepository.Commit();
-        }
-
         private static void DumpPeople(IReadOnlyRepository<Person> employeeRepository)
         {
+            //Covariance:
+            //Take a type that uses Employee and treat it as if it is using Person.
+
             var employees = employeeRepository.FindAll();
             foreach (var employee in employees)
             {
                 Console.WriteLine(employee.Name);
             }
+        }
+
+        private static void AddManagers(IWriteOnlyRepository<Manager> employeeRepository)
+        {
+            //Contravariance:
+            //Treat a repository of Employee as a repository of Manager
+
+            employeeRepository.Add(new Manager { Name = "Alex" });
+            employeeRepository.Commit();
         }
 
         private static void QueryEmployees(IRepository<Employee> employeeRepository)

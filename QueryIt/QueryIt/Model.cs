@@ -16,6 +16,7 @@ namespace QueryIt
         public string Name { get; set; }
     }
 
+    //Employee is Person and IEntity
     public class Employee : Person, IEntity
     {
         public int Id { get; set; }

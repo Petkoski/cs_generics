@@ -25,10 +25,11 @@ namespace QueryIt
         IQueryable<T> FindAll(); //Return all entities as IQueryable<T>
     }
 
-    //Generic constraint: where T : class, IEntity (generic param T has to be a class & IEntity)
+    //Generic constraint: where T : class, IEntity (generic param T has to be a class [a reference type] and also has to implement IEntity)
+    //Adding constraint IEntity to force T to be something that has IsValid() method (used in Add() method below)
     public class SqlRepository<T> : IRepository<T> where T : class, IEntity
     {
-        DbContext _ctx;
+        DbContext _ctx; 
         DbSet<T> _set;
 
         public SqlRepository(DbContext ctx)
@@ -39,7 +40,7 @@ namespace QueryIt
 
         public void Add(T newEntity)
         {
-            if (newEntity.IsValid())
+            if (newEntity.IsValid()) //Here's why T must contain IsValid() method
             {
                 _set.Add(newEntity);
             }

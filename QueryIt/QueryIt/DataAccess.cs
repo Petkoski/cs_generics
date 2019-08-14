@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -7,18 +6,26 @@ namespace QueryIt
 {
     public class EmployeeDb : DbContext
     {
+        public EmployeeDb(string connectionString) : base(connectionString)
+        {
+        }
+
         public DbSet<Employee> Employees { get; set; }
     }
 
+    /**
+     * Each repository must be disposable
+     */
     public interface IRepository<T> : IDisposable
     {
         void Add(T newEntity);
         void Delete(T entity);
         int Commit();
         T FindById(int id);
-        IQueryable<T> FindAll();
+        IQueryable<T> FindAll(); //Return all entities as IQueryable<T>
     }
 
+    //Generic constraint: where T : class, IEntity (generic param T has to be a class & IEntity)
     public class SqlRepository<T> : IRepository<T> where T : class, IEntity
     {
         DbContext _ctx;
@@ -27,7 +34,7 @@ namespace QueryIt
         public SqlRepository(DbContext ctx)
         {
             _ctx = ctx;
-            _set = _ctx.Set<T>();
+            _set = _ctx.Set<T>(); //Finds the DbSet for that parameter T (in the DbContext ctx)
         }
 
         public void Add(T newEntity)

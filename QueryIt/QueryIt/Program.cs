@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QueryIt
 {
@@ -11,17 +8,18 @@ namespace QueryIt
     {
         static void Main(string[] args)
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<EmployeeDb>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<EmployeeDb>()); //Tell the EF that is okay to drop-and-recreate the db every time the app runs
 
-            using (IRepository<Employee> employeeRepository 
-                = new SqlRepository<Employee>(new EmployeeDb()))
+            using (IRepository<Employee> employeeRepository = new SqlRepository<Employee>(new EmployeeDb("Data Source=DESKTOP-4Q6L9RH\\MSSQLSERVER17;Initial Catalog=GenericsDb1;Persist Security Info=True;User ID=jovan;Password=EX8O25um4n7fn")))
             {
                 AddEmployees(employeeRepository);
-                AddManagers(employeeRepository);
                 CountEmployees(employeeRepository);
-                QueryEmployees(employeeRepository);
-                DumpPeople(employeeRepository);   
+                //AddManagers(employeeRepository);
+                //QueryEmployees(employeeRepository);
+                //DumpPeople(employeeRepository);
             }
+
+            Console.Read();
         }
 
         private static void AddManagers(IRepository<Employee> employeeRepository)

@@ -29,16 +29,16 @@ namespace ReflectIt.Tests
             Assert.AreEqual(typeof(SqlRepository<Employee>), repository.GetType());
         }
 
-        //[TestMethod]
-        //public void Can_Resolve_Concrete_Type()
-        //{
-        //    var ioc = new Container();
-        //    ioc.For<ILogger>().Use<SqlServerLogger>();
-        //    ioc.For(typeof(IRepository<>)).Use(typeof(SqlRepository<>));
+        [TestMethod]
+        public void Can_Resolve_Concrete_Type()
+        {
+            var ioc = new Container();
+            ioc.For<ILogger>().Use<SqlServerLogger>();
+            ioc.For(typeof(IRepository<>)).Use(typeof(SqlRepository<>)); //IRepository<> of anything (unbound generic)
 
-        //    var service = ioc.Resolve<InvoiceService>();
+            var service = ioc.Resolve<InvoiceService>();
 
-        //    Assert.IsNotNull(service);
-        //}
+            Assert.IsNotNull(service);
+        }
     }
 }

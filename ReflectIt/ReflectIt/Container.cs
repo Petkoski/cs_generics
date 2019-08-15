@@ -51,14 +51,14 @@ namespace ReflectIt
 
         private object CreateInstance(Type destinationType)
         {
-            var paramters = destinationType.GetConstructors()
+            var parameters = destinationType.GetConstructors()
                                    .OrderByDescending(c => c.GetParameters().Count())
                                    .First()
                                    .GetParameters()
                                    .Select(p => Resolve(p.ParameterType))
                                    .ToArray();
             
-            return Activator.CreateInstance(destinationType, paramters);
+            return Activator.CreateInstance(destinationType, parameters);
         }
 
         public class ContainerBuilder //Nested class inside the Container class

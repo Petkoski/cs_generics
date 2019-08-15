@@ -23,6 +23,8 @@ namespace ReflectIt
 
     public class SqlRepository<T> : IRepository<T>
     {
+        //Does not have a default ctor
+
         public SqlRepository(ILogger logger) //This constructor needs a logger to do any work
         {
 

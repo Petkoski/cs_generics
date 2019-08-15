@@ -8,7 +8,7 @@ namespace ReflectIt
 {
     public interface ILogger
     {
-
+        //Typically it would have methods like LogMessage(), Audit() or Warning()
     }
 
     public class SqlServerLogger : ILogger
@@ -23,10 +23,12 @@ namespace ReflectIt
 
     public class SqlRepository<T> : IRepository<T>
     {
-        public SqlRepository(ILogger logger)
+        public SqlRepository(ILogger logger) //This constructor needs a logger to do any work
         {
 
         }
+        //Constructing SqlRepository<T> is trickier than constructing SqlServerLogger because 
+        //SqlRepository<T> needs an ILogger dependency
     }
 
     public class Customer

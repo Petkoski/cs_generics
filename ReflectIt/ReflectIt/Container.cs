@@ -61,9 +61,9 @@ namespace ReflectIt
             return Activator.CreateInstance(destinationType, paramters);
         }
 
-        public class ContainerBuilder
+        public class ContainerBuilder //Nested class inside the Container class
         {
-            public ContainerBuilder(Container container, Type sourceType)
+            public ContainerBuilder(Container container, Type sourceType) //Reference to the parent container and associated with a specific source type
             {
                 _container = container;
                 _sourceType = sourceType;

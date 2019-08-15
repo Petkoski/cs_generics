@@ -34,11 +34,13 @@ namespace ReflectIt
             }
             Console.WriteLine();
 
-            //var employee = new Employee();
-            //var employeeType = typeof(Employee);
-            //var methodInfo = employeeType.GetMethod("Speak");
-            //methodInfo = methodInfo.MakeGenericMethod(typeof(DateTime));            
-            //methodInfo.Invoke(employee, null);
+            //Invoking generic method:
+            var employee = new Employee();
+            var employeeType = typeof(Employee); //Reference to the type
+            var methodInfo = employeeType.GetMethod("Speak"); //Reference to the method info
+            methodInfo = methodInfo.MakeGenericMethod(typeof(DateTime));
+            //employee.Speak<DateTime>();
+            methodInfo.Invoke(employee, null);
 
             Console.Read();
         }

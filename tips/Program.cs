@@ -10,6 +10,16 @@ namespace Tips
     {
         static void Main(string[] args)
         {
+            //#1:
+            //Using generics:
+            var aGeneric = new ItemGeneric<int>();
+            var bGeneric = new ItemGeneric<int>();
+            var cGeneric = new ItemGeneric<string>();
+            Console.WriteLine(ItemGeneric<int>.InstanceCount); //Output: 2. Only instances of ItemGeneric<int> share the static field.
+            Console.WriteLine(ItemGeneric<string>.InstanceCount); //Output: 1
+
+            //#2:
+            //Using base class:
             var list = new List<Item>();
 
             //Adding different type items to a list
@@ -21,8 +31,10 @@ namespace Tips
             list.Add(b);
             list.Add(c);
 
-            Console.WriteLine(Item.InstanceCount);
-            Console.WriteLine(Item.InstanceCount);
+            //Accessing static field of the base class
+            Console.WriteLine(Item.InstanceCount); //Output: 3
+
+            Console.Read();
         }
     }
 
@@ -34,6 +46,16 @@ namespace Tips
     public class Item
     {
         public Item()
+        {
+            InstanceCount += 1;
+        }
+
+        public static int InstanceCount; //Static fields are shared accross all instances of Item
+    }
+
+    public class ItemGeneric<T>
+    {
+        public ItemGeneric()
         {
             InstanceCount += 1;
         }

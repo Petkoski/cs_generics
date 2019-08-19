@@ -16,8 +16,9 @@ namespace Tips
 
     public static class StringExtensions
     {
-        public static TEnum ParseEnum<TEnum>(this string value)
-            where TEnum : struct
+        public static TEnum ParseEnum<TEnum>(this string value) //Extension method on string
+            //where TEnum : System.Enum //Not possible. Can't force TEnum to be an enum.
+            where TEnum : struct //The only thing we can do at compile time
         {
             return (TEnum)Enum.Parse(typeof(TEnum), value);
         }
@@ -32,7 +33,6 @@ namespace Tips
             Console.WriteLine(value);
 
             //(Steps)Enum.Parse(typeof(Steps), input);
-
         }
     }
 }
